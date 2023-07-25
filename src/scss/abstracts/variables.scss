@@ -2,5 +2,27 @@ $primary: #fff;;
 $secondary: #fff;
 $black: #000;
 $white: #fff;
-$bg: #282c34
+$bg: #282c34;
 
+$gutter: 30px;
+
+$prefix: 'advent-calendar-';
+
+// scss-docs-start grid-breakpoints
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+) !default;
+
+// scss-docs-start container-max-widths
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1320px
+) !default;
