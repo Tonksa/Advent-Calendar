@@ -19,7 +19,7 @@
 
         @each $name, $width in $grid-breakpoints {
             @if ($extend-breakpoint) {
-                // Commented out the original container functionality below as we don't unneccesary CSS.
+                // // Commented out the original container functionality below as we don't unneccesary CSS.
                 // .container#{breakpoint-infix($name, $grid-breakpoints)} {
                 //     @extend %responsive-container-#{$breakpoint};
                 // }

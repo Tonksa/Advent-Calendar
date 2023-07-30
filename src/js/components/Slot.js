@@ -1,9 +1,13 @@
 import React from "react";
 
 export default function Slot(props) {
+    const { id } = props
+
     return (
-        <>
-            <p>Slot is here</p>
-        </>
+        <div className="slot">
+            <div className="slot__inner">
+                <p>{id}</p>
+            </div>
+        </div>
     )
 }
