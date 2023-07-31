@@ -1,0 +1,7 @@
+@use '../abstracts/variables' as *;
+
+.active-slot {
+    padding: 30px;
+    border: $border-width solid $white;
+    border-radius: $border-radius;
+}

@@ -8,8 +8,9 @@
 @use './bootstrap/components/container';
 
 // Components
-@use './components/slot';
 @use './components/notice';
+@use './components/slot';
+@use './components/active-slot';
 
 
 code {

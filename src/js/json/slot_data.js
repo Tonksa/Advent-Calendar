@@ -6,13 +6,14 @@ export let slot_data = [
     },
     {
         "id": 2,
-        "type": "text",
+        "type": "image",
         "content": "Consectetur adipiscing elit."
     },
     {
         "id": 3,
-        "type": "text",
-        "content": "Vestibulum ac mauris lacinia, eget ultrices quam consequat."
+        "type": "link",
+        "content": "Vestibulum ac mauris lacinia, eget ultrices quam consequat.",
+        "url": "https://google.com"
     },
     {
         "id": 4,

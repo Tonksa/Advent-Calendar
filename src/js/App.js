@@ -1,26 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import '../scss/app.scss';
-// import Header from './components/Header';
 import Slot from './components/Slot';
+import ActiveSlot from './components/ActiveSlot';
 import Notice from './components/Notice';
 import { slot_data } from "./json/slot_data.js";
+
+/** TODO
+ * - Slot:
+ * - - On click, open new "page" with the content on it.
+ * - - Implement cache for those already clicked.
+ * - - After implemented cache, change layout of regular slot content.
+ */
 
 function App() {
     const [showNotice, setShowNotice] = useState(false);
     const [noticeText, setNoticeText] = useState("");
     const noticeDisplayTime = "10000"
 
+    const [activeSlotID, setActiveSlotID] = useState(null);
+
     const handleSlotClick = (id) => {
         const currentDate = new Date();
-        const slotDate = new Date(2023, 7, id); // Months are 0-indexed, so 7 represents August
-
-        console.log(`Current date: ${currentDate}`)
-        console.log(`Slot Date: ${slotDate}`)
+        const slotDate = new Date(2023, 6, id); // Months are 0-indexed, so 7 represents August
 
         if (slotDate > currentDate) {
             setShowNotice(true);
             setNoticeText(`You are too early for that slot! ${slotDate}`)
         } else {
+            setActiveSlotID(id);
             setShowNotice(false);
         }
     };
@@ -50,15 +57,26 @@ function App() {
             )}
 
             <div className='container'>
-                <div className='slots'>
-                    {slot_data.map((item) => (
-                        <Slot
-                            key={item.id}
-                            id={item.id}
-                            onSlotClick={handleSlotClick} 
-                        />
-                    ))}
-                </div>
+                {!activeSlotID &&
+                    <div className='slots'>
+                        {slot_data.map((item) => (
+                            <Slot
+                                key={item.id}
+                                id={item.id}
+                                onSlotClick={handleSlotClick}
+
+                                // Implement some cache control to change the value of this.
+                                isOpen={false}
+                            />
+                        ))}
+                    </div>
+                }
+
+                {activeSlotID &&
+                    <ActiveSlot
+                        id={activeSlotID}
+                    />
+                }
             </div>
         </>
     );

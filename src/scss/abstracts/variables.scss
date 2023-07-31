@@ -12,6 +12,9 @@ $prefix: 'advent-calendar-';
 $border-width: 2px;
 $border-radius: 5px;
 
+// z-indexes
+$z-notice: 10;
+
 // scss-docs-start grid-breakpoints
 $grid-breakpoints: (
   xs: 0,

@@ -7,8 +7,15 @@ export default function Slot(props) {
         onSlotClick(id);
     };
 
+    let isOpenTesting = false;
+    if (id === 1) {
+        isOpenTesting = true;
+    }
+
+    const isOpenClass = isOpenTesting ? ' --is-open' : '';
+
     return (
-        <div className="slot">
+        <div className={`slot${isOpenClass}`}>
             <div className="slot__inner" onClick={handleSlotClick}>
                 <p>{id}</p>
             </div>
