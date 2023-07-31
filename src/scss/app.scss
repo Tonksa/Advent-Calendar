@@ -9,6 +9,7 @@
 
 // Components
 @use './components/slot';
+@use './components/notice';
 
 
 code {
@@ -30,6 +31,7 @@ body {
 // Implement a better method
 #advent-calendar {
     padding: 50px 0;
+    position: relative;
 }
 
 .slots {
