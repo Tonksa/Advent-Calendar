@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../scss/app.scss';
 import Slot from './components/Slot';
 import ActiveSlot from './components/ActiveSlot';
@@ -10,18 +10,24 @@ import { slot_data } from "./json/slot_data.js";
  * - - On click, open new "page" with the content on it.
  * - - Implement cache for those already clicked.
  * - - After implemented cache, change layout of regular slot content.
+ * - Cache:
+ * - - Add option to clear
  */
 
 function App() {
     const [showNotice, setShowNotice] = useState(false);
     const [noticeText, setNoticeText] = useState("");
-    const noticeDisplayTime = "10000"
-
     const [activeSlotID, setActiveSlotID] = useState(null);
+    const [clickedSlots, setClickedSlots] = useState([]);
+
+    // Use a variable to check against the first load of the App - used later on for localstorage.
+    const isInitialMount = useRef(true);
+
+    const noticeDisplayTime = "10000"
 
     const handleSlotClick = (id) => {
         const currentDate = new Date();
-        const slotDate = new Date(2023, 6, id); // Months are 0-indexed, so 7 represents August
+        const slotDate = new Date(2023, 7, id); // Months are 0-indexed, so 7 represents August
 
         if (slotDate > currentDate) {
             setShowNotice(true);
@@ -29,6 +35,11 @@ function App() {
         } else {
             setActiveSlotID(id);
             setShowNotice(false);
+
+            // Update clickedSlots array with the clicked slot's ID
+            if (!clickedSlots.includes(id)) {
+                setClickedSlots((prevClickedSlots) => [...prevClickedSlots, id]);
+            }
         }
     };
 
@@ -46,8 +57,28 @@ function App() {
         return () => clearTimeout(timeout);
     }, [showNotice]);
 
+    // Retrieve clicked slots from local storage when the component mounts
+    useEffect(() => {
+        const storedClickedSlots = JSON.parse(localStorage.getItem('clickedSlots'));
+        setClickedSlots(storedClickedSlots);
+    }, []);    
+
+    useEffect(() => {
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
+        } else {
+            localStorage.setItem('clickedSlots', JSON.stringify(clickedSlots));
+        }
+    }, [clickedSlots]);
+
+    console.log(clickedSlots)
+
     return (
         <>
+            <div className='container'>
+                <button onClick={() => setActiveSlotID(null)}>Reset</button>
+            </div>
+
             {showNotice && (
                 <div className='container'>
                     <Notice
@@ -64,9 +95,7 @@ function App() {
                                 key={item.id}
                                 id={item.id}
                                 onSlotClick={handleSlotClick}
-
-                                // Implement some cache control to change the value of this.
-                                isOpen={false}
+                                hasBeenOpened={clickedSlots.includes(item.id)}
                             />
                         ))}
                     </div>
