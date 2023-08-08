@@ -1,0 +1,15 @@
+@use './variables' as *;
+
+:root {
+    --#{$prefix}primary: #942c36;
+    --#{$prefix}secondary: #3b1d1f;
+    --#{$prefix}tertiary: #bb7671;
+
+    --#{$prefix}white: #f5f5f5;
+    --#{$prefix}dark: #302f36;
+
+    --#{$prefix}star-color: #FFCB45;
+    --#{$prefix}star-border-color: var(--#{$prefix}dark);
+    --#{$prefix}star-size: 70px;
+    --#{$prefix}star-font-size: 28px;
+}

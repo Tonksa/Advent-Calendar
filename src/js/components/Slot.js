@@ -12,7 +12,11 @@ export default function Slot(props) {
     return (
         <div className={`slot${isOpenClass}`}>
             <div className="slot__inner" onClick={handleSlotClick}>
-                <p>{id}</p>
+                <div className="slot__pattern"></div>
+
+                <div className="slot__number">
+                    <span className="slot__number-id">{id}</span>
+                </div>
             </div>
         </div>
     )
