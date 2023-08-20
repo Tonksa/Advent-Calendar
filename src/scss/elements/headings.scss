@@ -1,0 +1,31 @@
+@use '../abstracts/mixins/font-styles' as styles;
+
+h1,
+.h1 {
+    @include styles.heading(h1);
+}
+
+h2,
+.h2 {
+    @include styles.heading(h2);
+}
+
+h3,
+.h3 {
+    @include styles.heading(h3);
+}
+
+h4,
+.h4 {
+    @include styles.heading(h4);
+}
+
+h5,
+.h5 {
+    @include styles.heading(h5);
+}
+
+h6,
+.h6 {
+    @include styles.heading(h6);
+}  

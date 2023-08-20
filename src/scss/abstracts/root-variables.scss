@@ -1,15 +1,44 @@
 @use './variables' as *;
 
 :root {
-    --#{$prefix}primary: #942c36;
+    --#{$prefix}red: #C61610;
+    --#{$prefix}green: #034f20;
+    --#{$prefix}green-darker: #012b11;
+    --#{$prefix}green-lighter: #03702c;
     --#{$prefix}secondary: #3b1d1f;
     --#{$prefix}tertiary: #bb7671;
 
     --#{$prefix}white: #f5f5f5;
     --#{$prefix}dark: #302f36;
+    
+    --#{$prefix}body-background-stripe-1: var(--#{$prefix}green);
+    --#{$prefix}body-background-stripe-2: var(--#{$prefix}green-lighter);
+    --#{$prefix}body-background-stripe-size: 50px;
+
+    --#{$prefix}slots-background: var(--#{$prefix}red);
+    --#{$prefix}slots-padding: 30px;
 
     --#{$prefix}star-color: #FFCB45;
     --#{$prefix}star-border-color: var(--#{$prefix}dark);
-    --#{$prefix}star-size: 70px;
-    --#{$prefix}star-font-size: 28px;
+    --#{$prefix}star-size: 60px;
+    --#{$prefix}star-font-size: 26px;
+
+    --#{$prefix}body-font-size: 16px;
+    --#{$prefix}body-line-height: 1.2em;
+
+    --#{$prefix}title-font-size: 30px;
+    --#{$prefix}title-line-height: 1.2em;
+    
+    --#{$prefix}h1-font-size: 50px;
+    --#{$prefix}h1-line-height: 1.4;
+    --#{$prefix}h2-font-size: 36px;
+    --#{$prefix}h2-line-height: 1.4;
+    --#{$prefix}h3-font-size: 30px;
+    --#{$prefix}h3-line-height: 1.3;
+    --#{$prefix}h4-font-size: 26px;
+    --#{$prefix}h4-line-height: 1.3;
+    --#{$prefix}h5-font-size: 22px;
+    --#{$prefix}h5-line-height: 1.2;
+    --#{$prefix}h6-font-size: 18px;
+    --#{$prefix}h6-line-height: 1.2;
 }

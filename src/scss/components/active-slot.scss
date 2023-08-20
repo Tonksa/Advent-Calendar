@@ -1,7 +1,72 @@
 @use '../abstracts/variables' as *;
+@use '../abstracts/mixins/font-styles' as styles;
+
+$ribbon-width: 60px;
+$ribbon-offset: 20px;
 
 .active-slot {
     padding: 30px;
     border: $border-width solid $white;
     border-radius: $border-radius;
+    color: var(--#{$prefix}secondary);
+    background-color: var(--#{$prefix}white);
+
+    .inner {
+        position: relative;
+
+        .text {
+            @include styles.heading(h3);
+            margin: 0;
+        }
+        
+        img {
+            width: 100%;
+            display: block;
+        }
+    }
+
+
+    &.\--image {
+        padding: 0;
+
+        .inner {
+            .text {
+                position: relative;
+                bottom: 0;
+                background-color: var(--#{$prefix}white);
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+                margin: 0 auto -#{$border-width};
+
+                &::before, &::after {
+                    content: '';
+                    width: $ribbon-width;
+                    height: 100%;
+                    background-color: var(--#{$prefix}white);
+                    position: absolute;
+                    top: 20px;
+                    z-index: 1;
+                    
+                    /* clip ribbon end shape */
+                    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 25% 50%);
+                  
+                    /* draw and position the folded bit of the ribbon */
+                    background-image: linear-gradient(45deg, transparent 50%, var(--#{$prefix}green-darker) 50%);
+                    background-size: 20px 20px;
+                    background-repeat: no-repeat;
+                    background-position: bottom right;
+                }
+                  
+                &::before {
+                    left: calc(($ribbon-width - $ribbon-offset) * -1);
+                }
+                  
+                &::after {
+                    right: calc(($ribbon-width - $ribbon-offset) * -1);
+                    transform: scaleX(-1); /* flip horizontally */
+                }
+            }
+        }
+    }
 }

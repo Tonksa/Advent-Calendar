@@ -13,6 +13,9 @@
 @use './components/slot';
 @use './components/active-slot';
 
+// Elements
+@use './elements/headings';
+
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
@@ -20,11 +23,19 @@ code {
 
 body {
     color: $white;
-    background-color: var(--#{$prefix}primary);
+    background: repeating-linear-gradient(
+        135deg,
+        var(--#{$prefix}body-background-stripe-1),
+        var(--#{$prefix}body-background-stripe-1) var(--#{$prefix}body-background-stripe-size),
+        var(--#{$prefix}body-background-stripe-2) var(--#{$prefix}body-background-stripe-size),
+        var(--#{$prefix}body-background-stripe-2) calc(var(--#{$prefix}body-background-stripe-size) * 2)
+    );
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     font-family: $font;
+    font-size: var(--#{$prefix}body-font-size);
+    line-height: var(--#{$prefix}body-line-height);
 }
 
 * {
@@ -35,16 +46,31 @@ body {
 #advent-calendar {
     padding: 50px 0;
     position: relative;
-}
-
-.slots {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    row-gap: $gutter;
-    margin: 0 calc(var(--advent-calendar-gutter-x) * -0.5);
+    min-height: 100vh;
+
+    .inner {
+        width: 100%;
+    }
+}
+.slots {
+    padding: var(--#{$prefix}slots-padding);
+    background-color: var(--#{$prefix}slots-background);
+    border: $border-width solid var(--#{$prefix}white);
+    border-radius: $border-radius;
+
+    &__inner {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        row-gap: $gutter;
+        margin: 0 calc(var(--advent-calendar-gutter-x) * -0.5);
+    }
     
     .slot {
         flex: 0 0 16.666%;

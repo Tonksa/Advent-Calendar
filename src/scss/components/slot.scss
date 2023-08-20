@@ -29,9 +29,7 @@ $slot_pattern_size: 15px;
 
 
         &:hover {
-            // .slot__number {
-                animation: tilt-shaking 0.25s linear infinite;
-            // }
+            animation: tilt-shaking 0.25s linear infinite;
         }
     }
 
@@ -106,6 +104,12 @@ $slot_pattern_size: 15px;
             z-index: 1;
             top: 0;
             left: 0;
+        }
+    }
+
+    &.\--is-open {
+        .slot__pattern {
+            display: none;
         }
     }
 }

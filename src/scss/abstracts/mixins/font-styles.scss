@@ -1,0 +1,14 @@
+@use '../variables' as *;
+
+@mixin title() {
+    font-size: var(--#{$prefix}title-font-size);
+    line-height: var(--#{$prefix}title-line-height);
+}
+
+@mixin heading($heading-level) {
+    $font-size-variable: --#{$prefix}#{$heading-level}-font-size;
+    $line-height-variable: --#{$prefix}#{$heading-level}-line-height;
+  
+    font-size: var(#{$font-size-variable});
+    line-height: var(#{$line-height-variable});
+}
