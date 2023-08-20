@@ -1,3 +1,5 @@
+import slot_2 from '../../images/2.jpg';
+
 export let slot_data = [
     {
         "id": 1,
@@ -7,7 +9,8 @@ export let slot_data = [
     {
         "id": 2,
         "type": "image",
-        "content": "Consectetur adipiscing elit."
+        "content": "Consectetur adipiscing elit.",
+        "image": slot_2
     },
     {
         "id": 3,

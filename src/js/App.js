@@ -74,40 +74,42 @@ function App() {
     console.log(clickedSlots)
 
     return (
-        <>
-            <div className='container'>
-                <button onClick={() => setActiveSlotID(null)}>Reset</button>
-            </div>
-
+        <div className='inner'>
             {showNotice && (
-                <div className='container'>
+                <div className='container-lg'>
                     <Notice
                         text={noticeText}
                     />
                 </div>
             )}
 
-            <div className='container'>
                 {!activeSlotID &&
-                    <div className='slots'>
-                        {slot_data.map((item) => (
-                            <Slot
-                                key={item.id}
-                                id={item.id}
-                                onSlotClick={handleSlotClick}
-                                hasBeenOpened={clickedSlots.includes(item.id)}
-                            />
-                        ))}
+                    <div className='container-lg'>
+                        <div className='slots'>
+                            <div className='slots__inner'>
+                                {slot_data.map((item) => (
+                                    <Slot
+                                        key={item.id}
+                                        id={item.id}
+                                        onSlotClick={handleSlotClick}
+                                        hasBeenOpened={clickedSlots.includes(item.id)}
+                                    />
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 }
 
                 {activeSlotID &&
-                    <ActiveSlot
-                        id={activeSlotID}
-                    />
+                    <div className='container-md'>
+                        <button onClick={() => setActiveSlotID(null)}>Reset</button>
+
+                        <ActiveSlot
+                            id={activeSlotID}
+                        />
+                    </div>
                 }
-            </div>
-        </>
+        </div>
     );
 }
 
