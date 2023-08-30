@@ -1,4 +1,4 @@
-import slot_2 from '../../images/2.jpg';
+import placeholder from '../../images/2.jpg';
 
 export let slot_data = [
     {
@@ -10,7 +10,7 @@ export let slot_data = [
         "id": 2,
         "type": "image",
         "content": "Consectetur adipiscing elit.",
-        "image": slot_2
+        "image": placeholder
     },
     {
         "id": 3,
@@ -35,8 +35,9 @@ export let slot_data = [
     },
     {
         "id": 7,
-        "type": "text",
-        "content": "Nam aliquet elit eget ante luctus tempus."
+        "type": "image",
+        "content": "Disneyland, Egypt, Turkey, Lanzarote, Dubai, Budapest... The 7 holidays we've had together.",
+        "image": placeholder
     },
     {
         "id": 8,

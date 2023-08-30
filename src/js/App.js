@@ -74,42 +74,44 @@ function App() {
     console.log(clickedSlots)
 
     return (
-        <div className='inner'>
-            {showNotice && (
-                <div className='container-lg'>
-                    <Notice
-                        text={noticeText}
-                    />
-                </div>
-            )}
-
-                {!activeSlotID &&
+        <>
+            <div className='inner'>
+                {showNotice && (
                     <div className='container-lg'>
-                        <div className='slots'>
-                            <div className='slots__inner'>
-                                {slot_data.map((item) => (
-                                    <Slot
-                                        key={item.id}
-                                        id={item.id}
-                                        onSlotClick={handleSlotClick}
-                                        hasBeenOpened={clickedSlots.includes(item.id)}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                }
-
-                {activeSlotID &&
-                    <div className='container-md'>
-                        <button onClick={() => setActiveSlotID(null)}>Reset</button>
-
-                        <ActiveSlot
-                            id={activeSlotID}
+                        <Notice
+                            text={noticeText}
                         />
                     </div>
-                }
-        </div>
+                )}
+
+                    {!activeSlotID &&
+                        <div className='container-lg'>
+                            <div className='slots'>
+                                <div className='slots__inner'>
+                                    {slot_data.map((item) => (
+                                        <Slot
+                                            key={item.id}
+                                            id={item.id}
+                                            onSlotClick={handleSlotClick}
+                                            hasBeenOpened={clickedSlots.includes(item.id)}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    {activeSlotID &&
+                        <div className='container-md'>
+                            <button className='back-arrow' onClick={() => setActiveSlotID(null)}></button>
+
+                            <ActiveSlot
+                                id={activeSlotID}
+                            />
+                        </div>
+                    }
+            </div>
+        </>
     );
 }
 
