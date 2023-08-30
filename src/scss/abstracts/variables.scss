@@ -12,6 +12,9 @@ $prefix: 'advent-calendar-';
 $border-width: 2px;
 $border-radius: 5px;
 
+$slot_padding: 10px;
+$slot_pattern_size: 15px;
+
 $star_border_size: 7px;
 
 $font: 'Courgette', cursive;
@@ -37,3 +40,8 @@ $container-max-widths: (
   xl: 1140px,
   xxl: 1320px
 ) !default;
+
+// Back Arrow Styles
+$arrow-icon: url("data:image/svg+xml;charset=UTF-8,%3csvg width='20' height='17' viewBox='0 0 20 17' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M11.3333 1.64282L18 8.49997M18 8.49997L11.3333 15.3571M18 8.49997L2 8.49997' stroke='%23FD0095' stroke-width='2.28571' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
+$arrow-width: 35px;
+$arrow-height: 35px;

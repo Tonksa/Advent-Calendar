@@ -12,10 +12,10 @@
 @use './components/notice';
 @use './components/slot';
 @use './components/active-slot';
+@use './components/back-arrow';
 
 // Elements
 @use './elements/headings';
-
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;

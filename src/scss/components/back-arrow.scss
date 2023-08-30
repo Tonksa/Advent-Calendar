@@ -1,0 +1,24 @@
+@use '../abstracts/variables' as *;
+
+.back-arrow {
+    width: $arrow-width;
+    height: $arrow-height;
+    background-color: var(--#{$prefix}arrow-colour);
+    mask: $arrow-icon no-repeat;
+    mask-size: $arrow-width $arrow-height;
+    mask-position: right;
+    border: 0;
+    margin-bottom: $gutter;
+    display: block;
+    transition: 0.2s ease margin;
+    cursor: pointer;
+
+    // Arrow originally points right, so rotate it left.
+    transform: rotate(180deg);
+    transform-origin: center;
+
+    &:hover {
+        width: $arrow-width + calc($gutter * 0.25);
+        margin-left: calc($gutter * -0.25);
+    }
+}
