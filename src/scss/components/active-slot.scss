@@ -1,15 +1,26 @@
 @use '../abstracts/variables' as *;
 @use '../abstracts/mixins/font-styles' as styles;
+@use '../abstracts/mixins/star' as star;
 
 $ribbon-width: 60px;
 $ribbon-offset: 20px;
+$as-padding: 30px;
 
 .active-slot {
-    padding: 30px;
+    padding: $as-padding * 1.5 $as-padding $as-padding;
     border: $border-width solid $white;
     border-radius: $border-radius;
     color: var(--#{$prefix}secondary);
     background-color: var(--#{$prefix}white);
+    position: relative;
+
+    .number {
+        @include star.star('.number__id');
+        position: absolute;
+        top: calc((var(--#{$prefix}star-size) + $star_border_size) * -0.5);
+        left: calc(50% - ((var(--#{$prefix}star-size) + $star_border_size) * 0.5));
+        z-index: 1;
+    }
 
     .inner {
         position: relative;

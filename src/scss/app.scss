@@ -13,9 +13,13 @@
 @use './components/slot';
 @use './components/active-slot';
 @use './components/back-arrow';
+@use './components/animations/fade';
 
 // Elements
 @use './elements/headings';
+
+// Mixins
+@use './bootstrap/mixins/breakpoints' as breakpoint;
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
@@ -76,5 +80,25 @@ body {
         flex: 0 0 16.666%;
         max-width: 16.666%;
         padding: 0 calc(var(--advent-calendar-gutter-x) * 0.5);
+
+        @include breakpoint.media-breakpoint-down(lg) {
+            flex: 0 0 20%;
+            max-width: 20%;
+        }
+
+        @include breakpoint.media-breakpoint-down(md) {
+            flex: 0 0 25%;
+            max-width: 25%;
+        }
+
+        @include breakpoint.media-breakpoint-down(sm) {
+            flex: 0 0 33.333%;
+            max-width: 33.333%;
+        }
+
+        @include breakpoint.media-breakpoint-down(xs) {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
     }
 }

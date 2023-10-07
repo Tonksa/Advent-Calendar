@@ -4,7 +4,5 @@ import App from './js/App.js';
 
 const root = createRoot(document.getElementById('advent-calendar'));
 root.render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>
+    <App />
 );
