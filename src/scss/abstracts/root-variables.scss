@@ -1,4 +1,5 @@
 @use './variables' as *;
+@use '../bootstrap/mixins/breakpoints' as *;
 
 :root {
     --#{$prefix}red: #C61610;
@@ -22,13 +23,9 @@
     --#{$prefix}star-border-color: var(--#{$prefix}dark);
     --#{$prefix}star-size: 60px;
     --#{$prefix}star-font-size: 26px;
+    --#{$prefix}star-font-offset: 5px;
     
     --#{$prefix}arrow-colour: var(--#{$prefix}white);
-
-    // --#{$prefix}slot-transitioner-pattern-size: 50px;
-    // --#{$prefix}slot-transitioner-star-border-size: 10px;
-    // --#{$prefix}slot-transitioner-star-size: 200px;
-    // --#{$prefix}slot-transitioner-star-font-size: 50px;
 
     --#{$prefix}body-font-size: 16px;
     --#{$prefix}body-line-height: 1.2em;
@@ -48,4 +45,34 @@
     --#{$prefix}h5-line-height: 1.2;
     --#{$prefix}h6-font-size: 18px;
     --#{$prefix}h6-line-height: 1.2;
+
+    @include media-breakpoint-down(md) {
+        --#{$prefix}h1-font-size: 30px;
+        --#{$prefix}h1-line-height: 1.3;
+    }
+
+    @include media-breakpoint-down(md) {
+        --#{$prefix}h2-font-size: 26px;
+        --#{$prefix}h2-line-height: 1.3;
+    }
+
+    @include media-breakpoint-down(md) {
+        --#{$prefix}h3-font-size: 22px;
+        --#{$prefix}h3-line-height: 1.2;
+    }
+
+    @include media-breakpoint-down(md) {
+        --#{$prefix}h4-font-size: 22px;
+        --#{$prefix}h4-line-height: 1.2;
+    }
+
+    @include media-breakpoint-down(md) {
+        --#{$prefix}h5-font-size: 18px;
+        --#{$prefix}h5-line-height: 1.2;
+    }
+
+    @include media-breakpoint-down(md) {
+        --#{$prefix}h6-font-size: 16px;
+        --#{$prefix}h6-line-height: 1.2;
+    }
 }

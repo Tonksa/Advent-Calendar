@@ -21,6 +21,10 @@
 // Mixins
 @use './bootstrap/mixins/breakpoints' as breakpoint;
 
+// Mixins
+@import './fonts/courgette';
+@import './fonts/pacifico';
+
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

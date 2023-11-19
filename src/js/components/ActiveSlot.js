@@ -18,7 +18,7 @@ export default function ActiveSlot(props) {
                         <img src={image} alt={`Slot Number ${id}`} />
                     }
     
-                    <p className="text">{content}</p>
+                    <p className="text"><span class="text__inner">{content}</span></p>
                     {/* <p className="">{type}</p> */}
                 </div>
             </div>

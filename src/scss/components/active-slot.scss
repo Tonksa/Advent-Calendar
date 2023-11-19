@@ -28,6 +28,11 @@ $as-padding: 30px;
         .text {
             @include styles.heading(h3);
             margin: 0;
+
+            &__inner {
+                position: relative;
+                z-index: 2;
+            }
         }
         
         img {
