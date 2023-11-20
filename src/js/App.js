@@ -22,6 +22,9 @@ function App() {
     const [showActiveSlot, setShowActiveSlot] = useState(false);
     const [allowSlotClick, setAllowSlotClick] = useState(true);
 
+    // Unlocked param to allow admins to view every single slot on any date
+    const [isUnlocked, setIsUnlocked] = useState(false);
+
     // Use a variable to check against the first load of the App - used later on for localstorage.
     const isInitialMount = useRef(true);
 
@@ -29,17 +32,23 @@ function App() {
 
     const patternTransitionTotalTime = 800;
 
-    localStorage.clear();
+    // Check if the URL contains the query parameter "?unlocked=true" and update the state
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const unlockedValue = urlParams.get('unlocked') === 'true' ? true : false;
+
+        setIsUnlocked(unlockedValue);
+    }, []);
 
     const handleSlotClick = (id) => {
         // Clear the existing timeout to prevent the notice from lingering
         clearTimeout(noticeTimeout);
 
-        const currentDate = new Date(2023, 10, 15);
-        const slotDate = new Date(2023, 10, id); // Months are 0-indexed, so 11 represents December
+        const currentDate = new Date();
+        const slotDate = new Date(2023, 11, id); // Months are 0-indexed, so 11 represents December
         const formattedSlotDate = format(slotDate, 'MMMM do');
 
-        if (slotDate > currentDate) {
+        if ((slotDate > currentDate) && !isUnlocked) {
             setShowNotice(true);
             setNoticeText(`You are too early for that slot, cheeky bastard! Try again on ${formattedSlotDate}.`)
 
