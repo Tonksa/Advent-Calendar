@@ -6,8 +6,6 @@
     &__inner {
         border: $border-width solid $white;
         border-radius: $border-radius;
-        animation-name: fadeInFromTop;
-        animation-duration: 10s;
         padding: 20px;
         text-align: center;
         position: absolute;
@@ -24,21 +22,33 @@
     }
 }
 
-@keyframes fadeInFromTop {
-    0% {
+/* Add this to your existing styles or create a new section for transitions */
+.notice-enter {
+    .notice__inner {
         opacity: 0;
         transform: translateY(-35px);
     }
-    10% {
+}
+
+.notice-enter-active {
+    .notice__inner {
+        opacity: 1;
+        transform: translateY(0);
+        transition: all 300ms ease-in;
+    }
+}
+
+.notice-exit {
+    .notice__inner {
         opacity: 1;
         transform: translateY(0);
     }
-    90% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    100% {
+}
+
+.notice-exit-active {
+    .notice__inner {
         opacity: 0;
         transform: translateY(-35px);
+        transition: all 300ms ease-in;
     }
 }

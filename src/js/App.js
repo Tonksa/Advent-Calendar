@@ -5,6 +5,7 @@ import ActiveSlot from './components/ActiveSlot';
 import Notice from './components/Notice';
 import { slot_data } from "./json/slot_data.js";
 import { CSSTransition } from 'react-transition-group';
+import { format } from 'date-fns'
 
 /** TODO
  * - Randomise the order
@@ -24,24 +25,32 @@ function App() {
     // Use a variable to check against the first load of the App - used later on for localstorage.
     const isInitialMount = useRef(true);
 
-    const noticeDisplayTime = "10000"
+    const noticeDisplayTime = "4000"
 
-    const patternTransitionTotalTime = 600;
+    const patternTransitionTotalTime = 800;
 
-    // localStorage.clear();
+    localStorage.clear();
 
     const handleSlotClick = (id) => {
-        if (allowSlotClick) {
-            // Ensure that we don't allow the user to spam click as many slots as they can whilst the transition is happening.
-            setAllowSlotClick(false);
+        // Clear the existing timeout to prevent the notice from lingering
+        clearTimeout(noticeTimeout);
 
-            const currentDate = new Date();
-            const slotDate = new Date(2023, 7, id); // Months are 0-indexed, so 7 represents August
-    
-            if (slotDate > currentDate) {
-                setShowNotice(true);
-                setNoticeText(`You are too early for that slot! ${slotDate}`)
-            } else {
+        const currentDate = new Date(2023, 10, 15);
+        const slotDate = new Date(2023, 10, id); // Months are 0-indexed, so 11 represents December
+        const formattedSlotDate = format(slotDate, 'MMMM do');
+
+        if (slotDate > currentDate) {
+            setShowNotice(true);
+            setNoticeText(`You are too early for that slot, cheeky bastard! Try again on ${formattedSlotDate}.`)
+
+            // Move user back to top of page to see the Notice
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        } else {
+            if (allowSlotClick) {
+                // Ensure that we don't allow the user to spam click as many slots as they can whilst the transition is happening.
+                setAllowSlotClick(false);
+
+                // Disable Notice
                 setShowNotice(false);
                 
                 // Allow the transition to the pattern on the Slot if the Slot has not previously been opened.
@@ -64,19 +73,18 @@ function App() {
         }
     };
 
+    // Declare a variable to store the notice timeout
+    let noticeTimeout;
+
     // Set up a timer to reset showNotice to false after 10 seconds
     useEffect(() => {
-        let timeout;
-
-        if (showNotice) {
-            timeout = setTimeout(() => {
-                setShowNotice(false);
-            }, noticeDisplayTime);
-        }
+        noticeTimeout = setTimeout(() => {
+            setShowNotice(false);
+        }, noticeDisplayTime);
 
         // Clean up the timer when the component unmounts or when showNotice becomes false
-        return () => clearTimeout(timeout);
-    }, [showNotice]);
+        return () => clearTimeout(noticeTimeout);
+    }, [showNotice, noticeText]);
 
     // Retrieve clicked slots from local storage when the component mounts
     useEffect(() => {
@@ -95,13 +103,18 @@ function App() {
     return (
         <>
             <div className='inner'>
-                {showNotice && (
+                <CSSTransition
+					in={showNotice}
+					timeout={1000} // Adjust the duration to match your CSS transition duration
+					classNames='notice'
+					unmountOnExit
+				>
                     <div className='container-lg'>
                         <Notice
                             text={noticeText}
                         />
                     </div>
-                )}
+                </CSSTransition>
 
                 <CSSTransition
 					in={!activeSlotID && showSlots}

@@ -1,16 +1,14 @@
 import React from "react";
 
 export default function Notice(props) {
-    const { text, displayTime } = props
-    // const noticeDisplayTime = '10s'
+    const { text } = props
 
     return (
         <div className="notice">
             <div
                 className="notice__inner"
-                // data-display-time={displayTime}
                 >
-                <p>{text} notice here</p>
+                <p>{text}</p>
             </div>
         </div>
     )

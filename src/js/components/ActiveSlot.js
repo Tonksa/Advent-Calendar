@@ -19,7 +19,6 @@ export default function ActiveSlot(props) {
                     }
     
                     <p className="text"><span class="text__inner">{content}</span></p>
-                    {/* <p className="">{type}</p> */}
                 </div>
             </div>
         )
