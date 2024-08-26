@@ -42,7 +42,7 @@ function App() {
 
         if ((slotDate > currentDate) && !isUnlocked) {
             setShowNotice(true);
-            setNoticeText(`Ho ho ho! This surprise isn’t ready yet. Check back on ${formattedSlotDate}.`);
+            setNoticeText(`Nice try, but you're a bit early for this one! This surprise will be ready on ${formattedSlotDate}.`)
             // Move user back to top of page to see the Notice
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
