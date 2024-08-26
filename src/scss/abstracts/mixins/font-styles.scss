@@ -12,3 +12,8 @@
     font-size: var(#{$font-size-variable});
     line-height: var(#{$line-height-variable});
 }
+
+@mixin button() {
+    font-size: var(--#{$prefix}button-font-size);
+    line-height: var(--#{$prefix}button-line-height);
+}

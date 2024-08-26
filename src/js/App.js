@@ -10,7 +10,6 @@ import { format } from 'date-fns'
 /** TODO
  * - Randomise the order
  * - Add unlocked view
- * - Add option to clear
  */
 
 function App() {
@@ -21,6 +20,8 @@ function App() {
     const [showSlots, setShowSlots] = useState(true);
     const [showActiveSlot, setShowActiveSlot] = useState(false);
     const [allowSlotClick, setAllowSlotClick] = useState(true);
+
+    console.log(clickedSlots)
 
     // Unlocked param to allow admins to view every single slot on any date
     const [isUnlocked, setIsUnlocked] = useState(false);
@@ -82,6 +83,12 @@ function App() {
         }
     };
 
+    // Function to clear all active slots
+    const clearSlots = () => {
+        setClickedSlots([]);
+        localStorage.removeItem('clickedSlots');
+    };
+
     // Declare a variable to store the notice timeout
     let noticeTimeout;
 
@@ -113,11 +120,11 @@ function App() {
         <>
             <div className='inner'>
                 <CSSTransition
-					in={showNotice}
-					timeout={1000} // Adjust the duration to match your CSS transition duration
-					classNames='notice'
-					unmountOnExit
-				>
+                    in={showNotice}
+                    timeout={1000} // Adjust the duration to match your CSS transition duration
+                    classNames='notice'
+                    unmountOnExit
+                >
                     <div className='container-lg'>
                         <Notice
                             text={noticeText}
@@ -126,49 +133,60 @@ function App() {
                 </CSSTransition>
 
                 <CSSTransition
-					in={!activeSlotID && showSlots}
-					timeout={300} // Adjust the duration to match your CSS transition duration
-					classNames='fade'
-					unmountOnExit
-					onExited={() => {
-						// Transition has ended, now set the activeSlotID
+                    in={!activeSlotID && showSlots}
+                    timeout={300} // Adjust the duration to match your CSS transition duration
+                    classNames='fade'
+                    unmountOnExit
+                    onExited={() => {
+                        // Transition has ended, now set the activeSlotID
                         setShowActiveSlot(true);
                         setShowSlots(false);
-					}}
-				>
-					<div className='container-lg'>
-						<div className='slots'>
-							<div className='slots__inner'>
-								{slot_data.map((item) => (
-									<Slot
-										key={item.id}
-										id={item.id}
-										onSlotClick={handleSlotClick}
-										hasBeenOpened={clickedSlots && clickedSlots.includes(item.id)}
-									/>
-								))}
-							</div>
-						</div>
-					</div>
-				</CSSTransition>
+                    }}
+                >
+                    <div className='container-lg'>
+                        <h1 className="title">✨ Unwrap the Holiday Magic ✨</h1>
+                        <div className='slots'>
+                            <div className='slots__inner'>
+                                {slot_data.map((item) => (
+                                    <Slot
+                                        key={item.id}
+                                        id={item.id}
+                                        onSlotClick={handleSlotClick}
+                                        hasBeenOpened={clickedSlots && clickedSlots.includes(item.id)}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                        <div className="buttons">
+                            <button
+                                id="clear-button"
+                                className="btn"
+                                onClick={clearSlots}
+                                disabled={!clickedSlots || clickedSlots.length === 0}
+                                >
+                                    Clear all active slots
+                            </button>
+                        </div>
+                    </div>
+                </CSSTransition>
 
-				<CSSTransition
-					in={activeSlotID !== null && showActiveSlot}
-					timeout={300} // Adjust the duration to match your CSS transition duration
-					classNames='fade'
+                <CSSTransition
+                    in={activeSlotID !== null && showActiveSlot}
+                    timeout={300} // Adjust the duration to match your CSS transition duration
+                    classNames='fade'
                     onExited={() => {
-						// Transition has ended, now set the activeSlotID to re-show all of the Slots
+                        // Transition has ended, now set the activeSlotID to re-show all of the Slots
                         setShowSlots(true);
                         setActiveSlotID(null);
                         setAllowSlotClick(true);
-					}}
-					unmountOnExit
-				>
-					<div className='container-md'>
-						<button className='back-arrow' onClick={() => setShowActiveSlot(false)}></button>
-						<ActiveSlot id={activeSlotID} />
-					</div>
-				</CSSTransition>
+                    }}
+                    unmountOnExit
+                >
+                    <div className='container-md'>
+                        <button className='back-arrow' onClick={() => setShowActiveSlot(false)}></button>
+                        <ActiveSlot id={activeSlotID} />
+                    </div>
+                </CSSTransition>
             </div>
         </>
     );

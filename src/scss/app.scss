@@ -21,6 +21,9 @@
 // Mixins
 @use './bootstrap/mixins/breakpoints' as breakpoint;
 
+// Fonts
+@use './abstracts/mixins/font-styles' as font-styles;
+
 // Mixins
 @import './fonts/courgette';
 @import './fonts/pacifico';
@@ -64,6 +67,7 @@ body {
         width: 100%;
     }
 }
+
 .slots {
     padding: var(--#{$prefix}slots-padding);
     background-color: var(--#{$prefix}slots-background);
@@ -104,5 +108,40 @@ body {
             flex: 0 0 50%;
             max-width: 50%;
         }
+    }
+}
+
+.title {
+    margin: 0 0 25px;
+    text-align: center;
+}
+
+.buttons {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn {
+    appearance: none;
+    padding: 10px 15px;
+    background-color: var(--#{$prefix}green-darker);
+    color: var(--#{$prefix}white);
+    border: 2px solid var(--#{$prefix}green-darker);
+    transition: all 0.15s ease-in;
+    cursor: pointer;
+    @include font-styles.button;
+
+    &:not(:disabled) {
+        &:hover {
+            background-color: var(--#{$prefix}green);
+        }
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
     }
 }
