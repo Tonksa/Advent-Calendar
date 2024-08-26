@@ -131,6 +131,7 @@ body {
     color: var(--#{$prefix}white);
     border: 2px solid var(--#{$prefix}green-darker);
     transition: all 0.15s ease-in;
+    border-radius: $border-radius;
     cursor: pointer;
     @include font-styles.button;
 

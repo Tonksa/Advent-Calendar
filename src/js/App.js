@@ -5,12 +5,8 @@ import ActiveSlot from './components/ActiveSlot';
 import Notice from './components/Notice';
 import { slot_data } from "./json/slot_data.js";
 import { CSSTransition } from 'react-transition-group';
-import { format } from 'date-fns'
-
-/** TODO
- * - Randomise the order
- * - Add unlocked view
- */
+import { format } from 'date-fns';
+import { useLocation } from 'react-router-dom';
 
 function App() {
     const [showNotice, setShowNotice] = useState(false);
@@ -20,26 +16,21 @@ function App() {
     const [showSlots, setShowSlots] = useState(true);
     const [showActiveSlot, setShowActiveSlot] = useState(false);
     const [allowSlotClick, setAllowSlotClick] = useState(true);
-
-    console.log(clickedSlots)
-
-    // Unlocked param to allow admins to view every single slot on any date
     const [isUnlocked, setIsUnlocked] = useState(false);
 
     // Use a variable to check against the first load of the App - used later on for localstorage.
     const isInitialMount = useRef(true);
 
-    const noticeDisplayTime = "4000"
+    const noticeDisplayTime = 4000; // Duration for which notice is displayed
+    const patternTransitionTotalTime = 800; // Time for transition effect
 
-    const patternTransitionTotalTime = 800;
-
-    // Check if the URL contains the query parameter "?unlocked=true" and update the state
+    // Get current URL parameters to check if unlocked view should be enabled
+    const location = useLocation();
     useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const unlockedValue = urlParams.get('unlocked') === 'true' ? true : false;
-
+        const urlParams = new URLSearchParams(location.search);
+        const unlockedValue = urlParams.get('unlocked') === 'true';
         setIsUnlocked(unlockedValue);
-    }, []);
+    }, [location.search]);
 
     const handleSlotClick = (id) => {
         // Clear the existing timeout to prevent the notice from lingering
@@ -51,10 +42,9 @@ function App() {
 
         if ((slotDate > currentDate) && !isUnlocked) {
             setShowNotice(true);
-            setNoticeText(`Nice try, but you're a bit early for this one! This surprise will be ready on ${formattedSlotDate}.`)
-
+            setNoticeText(`Ho ho ho! This surprise isn’t ready yet. Check back on ${formattedSlotDate}.`);
             // Move user back to top of page to see the Notice
-            window.scrollTo({top: 0, behavior: 'smooth'});
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
             if (allowSlotClick) {
                 // Ensure that we don't allow the user to spam click as many slots as they can whilst the transition is happening.
@@ -62,23 +52,18 @@ function App() {
 
                 // Disable Notice
                 setShowNotice(false);
-                
+
                 // Allow the transition to the pattern on the Slot if the Slot has not previously been opened.
-                if (!clickedSlots || !clickedSlots.includes(id)) {
+                if (!clickedSlots.includes(id)) {
                     setTimeout(() => {
                         setActiveSlotID(id);
                     }, patternTransitionTotalTime);
                 } else {
                     setActiveSlotID(id);
                 }
-                
-                // Firstly, check if clickedSlots has any value. If not, then assign the slot clicked. This is only ever applicable upon the first slot slick.
-                if (!clickedSlots) {
-                    setClickedSlots([id])
-                } else if (!clickedSlots.includes(id)) {
-                    // Next check if the slot clicked already exists within the array, if not then add it.
-                    setClickedSlots((prevClickedSlots) => [...prevClickedSlots, id]);
-                }
+
+                // Update clickedSlots
+                setClickedSlots(prevClickedSlots => [...prevClickedSlots, id]);
             }
         }
     };
@@ -92,7 +77,7 @@ function App() {
     // Declare a variable to store the notice timeout
     let noticeTimeout;
 
-    // Set up a timer to reset showNotice to false after 10 seconds
+    // Set up a timer to reset showNotice to false after a specified duration
     useEffect(() => {
         noticeTimeout = setTimeout(() => {
             setShowNotice(false);
@@ -105,14 +90,14 @@ function App() {
     // Retrieve clicked slots from local storage when the component mounts
     useEffect(() => {
         const storedClickedSlots = JSON.parse(localStorage.getItem('clickedSlots'));
-        setClickedSlots(storedClickedSlots);
-    }, []);    
+        setClickedSlots(storedClickedSlots || []);
+    }, []);
 
     useEffect(() => {
-        if (isInitialMount.current) {
-            isInitialMount.current = false;
-        } else {
+        if (!isInitialMount.current) {
             localStorage.setItem('clickedSlots', JSON.stringify(clickedSlots));
+        } else {
+            isInitialMount.current = false;
         }
     }, [clickedSlots]);
 
@@ -121,20 +106,18 @@ function App() {
             <div className='inner'>
                 <CSSTransition
                     in={showNotice}
-                    timeout={1000} // Adjust the duration to match your CSS transition duration
+                    timeout={1000} // Duration to match your CSS transition duration
                     classNames='notice'
                     unmountOnExit
                 >
                     <div className='container-lg'>
-                        <Notice
-                            text={noticeText}
-                        />
+                        <Notice text={noticeText} />
                     </div>
                 </CSSTransition>
 
                 <CSSTransition
                     in={!activeSlotID && showSlots}
-                    timeout={300} // Adjust the duration to match your CSS transition duration
+                    timeout={300} // Duration to match your CSS transition duration
                     classNames='fade'
                     unmountOnExit
                     onExited={() => {
@@ -152,7 +135,7 @@ function App() {
                                         key={item.id}
                                         id={item.id}
                                         onSlotClick={handleSlotClick}
-                                        hasBeenOpened={clickedSlots && clickedSlots.includes(item.id)}
+                                        hasBeenOpened={clickedSlots.includes(item.id)}
                                     />
                                 ))}
                             </div>
@@ -162,9 +145,9 @@ function App() {
                                 id="clear-button"
                                 className="btn"
                                 onClick={clearSlots}
-                                disabled={!clickedSlots || clickedSlots.length === 0}
-                                >
-                                    Reset the Calendar
+                                disabled={!clickedSlots.length}
+                            >
+                                Reset the Calendar
                             </button>
                         </div>
                     </div>
@@ -172,7 +155,7 @@ function App() {
 
                 <CSSTransition
                     in={activeSlotID !== null && showActiveSlot}
-                    timeout={300} // Adjust the duration to match your CSS transition duration
+                    timeout={300} // Duration to match your CSS transition duration
                     classNames='fade'
                     onExited={() => {
                         // Transition has ended, now set the activeSlotID to re-show all of the Slots
