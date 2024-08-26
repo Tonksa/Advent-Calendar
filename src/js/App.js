@@ -46,12 +46,12 @@ function App() {
         clearTimeout(noticeTimeout);
 
         const currentDate = new Date();
-        const slotDate = new Date(2023, 11, id); // Months are 0-indexed, so 11 represents December
+        const slotDate = new Date(2024, 11, id); // Months are 0-indexed, so 11 represents December
         const formattedSlotDate = format(slotDate, 'MMMM do');
 
         if ((slotDate > currentDate) && !isUnlocked) {
             setShowNotice(true);
-            setNoticeText(`You are too early for that slot, cheeky bastard! Try again on ${formattedSlotDate}.`)
+            setNoticeText(`Nice try, but you're a bit early for this one! This surprise will be ready on ${formattedSlotDate}.`)
 
             // Move user back to top of page to see the Notice
             window.scrollTo({top: 0, behavior: 'smooth'});
@@ -164,7 +164,7 @@ function App() {
                                 onClick={clearSlots}
                                 disabled={!clickedSlots || clickedSlots.length === 0}
                                 >
-                                    Clear all active slots
+                                    Reset the Calendar
                             </button>
                         </div>
                     </div>
